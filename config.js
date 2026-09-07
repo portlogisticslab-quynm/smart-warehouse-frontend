@@ -1,4 +1,4 @@
 window.APP_CONFIG = {
-  API_BASE_URL: 'http://127.0.0.1:8000',
+  API_BASE_URL: 'https://smart-warehouse-backend.onrender.com',
   APP_VERSION: '2.5.5-web.3'
 };
