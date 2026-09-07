@@ -1,0 +1,23 @@
+
+:root{--navy:#102a43;--blue:#2563eb;--green:#059669;--bg:#f4f7fb;--border:#d8e2ef;--text:#17212b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(90deg,#102a43,#1f4a8a);color:#fff;padding:14px 22px}
+header h1{margin:0;font-size:22px}header small{opacity:.9}
+.app{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 72px)}
+.sidebar{background:white;border-right:1px solid var(--border);padding:14px;overflow:auto}
+.sidebar h3{font-size:13px;margin:16px 0 8px;color:#486581;text-transform:uppercase}
+button,.btn{width:100%;padding:10px;border:1px solid #b8c7d9;border-radius:7px;background:#fff;cursor:pointer;margin:4px 0;font-weight:600}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button.green{background:var(--green);color:#fff;border-color:var(--green)}
+input,select{width:100%;padding:8px;border:1px solid #bcccdc;border-radius:6px;margin:4px 0 9px}
+.model-list label{display:block;font-size:13px;margin:5px 0}.model-list input{width:auto;margin-right:6px}
+main{padding:14px;overflow:auto}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab-btn{width:auto;padding:8px 14px}.tab-btn.active{background:var(--navy);color:white}
+.tab{display:none}.tab.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px}.card{background:white;border:1px solid var(--border);border-radius:9px;padding:12px}
+.card h4{margin:0 0 8px;font-size:13px;color:#627d98}.big{font-size:22px;font-weight:bold}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.panel{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px;margin-bottom:12px}
+.table-wrap{overflow:auto;max-height:390px}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #d9e2ec;padding:6px;white-space:nowrap}th{background:#eaf1f8;position:sticky;top:0}
+canvas{max-height:330px}.status{font-size:12px;background:#f0f4f8;border:1px solid var(--border);padding:9px;border-radius:7px;min-height:46px}
+.scenario{display:grid;grid-template-columns:180px 1fr;gap:8px;align-items:center}.scenario input[type=range]{margin:0}
+@media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{border-right:none}.grid2,.cards{grid-template-columns:1fr}}

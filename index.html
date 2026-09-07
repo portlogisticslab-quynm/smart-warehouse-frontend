@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Warehouse v2.5.5 Web</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<header><h1>Smart Warehouse v2.5.5 — Web Decision Support System</h1>
+<small>Forecast • Inventory Position • Safety Stock • EOQ • Cost Model • Service Level Optimization</small></header>
+<div class="app">
+<aside class="sidebar">
+<h3>1. Workbook</h3>
+<input type="file" id="wb" accept=".xlsx,.xlsm">
+<button class="primary" onclick="uploadWorkbook()">Load Excel Workbook</button>
+<div class="status" id="status">Ready. Start backend, then load a workbook.</div>
+
+<h3>2. Forecast</h3>
+<label>Forecast SKU</label><select id="skuForecast"><option>ALL</option></select>
+<label>Forecast Horizon (days)</label><input id="horizon" type="number" min="1" max="90" value="14">
+<div class="model-list" id="models"></div>
+<button class="primary" onclick="runForecast()">Run Forecast</button>
+
+<h3>3. Inventory Policy</h3>
+<label><input style="width:auto" type="checkbox" id="useReview"> Use Review Period</label>
+<input type="number" id="reviewDays" value="7" min="1" max="90">
+<button onclick="applyPolicy()">Apply Forecast to Policy</button>
+<button class="green" onclick="buildPlan()">Build Replenishment Plan</button>
+
+<h3>4. Export</h3>
+<button onclick="downloadExport('forecast')">Export Forecast Report</button>
+<button onclick="downloadExport('plan')">Export Replenishment Plan</button>
+</aside>
+
+<main>
+<div class="tabs">
+<button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+<button class="tab-btn" data-tab="forecast">Forecast Lab</button>
+<button class="tab-btn" data-tab="policy">Policy & Alerts</button>
+<button class="tab-btn" data-tab="cost">Cost Model & EOQ</button>
+<button class="tab-btn" data-tab="service">Service Level Optimization</button>
+<button class="tab-btn" data-tab="plan">Replenishment Plan</button>
+</div>
+
+<section id="dashboard" class="tab active">
+<div class="cards">
+<div class="card"><h4>SKU Count</h4><div class="big" id="kpiSku">—</div></div>
+<div class="card"><h4>Total On Hand</h4><div class="big" id="kpiOnHand">—</div></div>
+<div class="card"><h4>High/Critical Alerts</h4><div class="big" id="kpiAlerts">—</div></div>
+<div class="card"><h4>Total Inventory Value</h4><div class="big" id="kpiValue">—</div></div>
+</div>
+<div class="grid2" style="margin-top:12px">
+<div class="panel"><h3>On-hand by SKU</h3><canvas id="invChart"></canvas></div>
+<div class="panel"><h3>Alerts</h3><div class="table-wrap" id="alertsTable"></div></div>
+</div>
+<div class="panel"><h3>Inventory Policy</h3><div class="table-wrap" id="policyTable"></div></div>
+</section>
+
+<section id="forecast" class="tab">
+<div class="grid2">
+<div class="panel"><h3>Forecast Summary</h3><div class="table-wrap" id="forecastSummary"></div></div>
+<div class="panel"><h3>Model Ranking</h3><div class="table-wrap" id="modelRanking"></div></div>
+</div>
+<div class="panel"><h3>Forecast Detail</h3><div class="table-wrap" id="forecastDetail"></div></div>
+<div class="panel"><h3>Model Error Detail</h3><div class="table-wrap" id="modelComparison"></div></div>
+</section>
+
+<section id="policy" class="tab">
+<div class="panel"><h3>Policy & Alerts</h3><div class="table-wrap" id="policyTable2"></div></div>
+</section>
+
+<section id="cost" class="tab">
+<div class="grid2">
+<div class="panel"><h3>EOQ / Service-Level Scenario</h3>
+<label>Selected SKU</label><select id="skuCost" onchange="loadScenarioDefaults()"></select>
+<div class="scenario">
+<label>Service Level p: <b id="pVal"></b></label><input id="pSlider" type="range" min="80" max="99.9" step="0.1" oninput="runScenarioDebounced()">
+<label>D Annual Demand: <b id="dVal"></b></label><input id="dSlider" type="range" min="100" max="30000" step="10" oninput="runScenarioDebounced()">
+<label>S Fixed Cost/Order: <b id="sVal"></b></label><input id="sSlider" type="range" min="1" max="1000" step="1" oninput="runScenarioDebounced()">
+<label>H Holding Cost/Unit/Year: <b id="hVal"></b></label><input id="hSlider" type="range" min="0.1" max="100" step="0.1" oninput="runScenarioDebounced()">
+</div><canvas id="eoqChart"></canvas></div>
+<div class="panel"><h3>Annual Cost Breakdown</h3><canvas id="costChart"></canvas></div>
+</div>
+<div class="panel"><h3>Cost Model</h3><div class="table-wrap" id="costTable"></div></div>
+</section>
+
+<section id="service" class="tab">
+<div class="panel"><h3>Automatic Service Level Optimization</h3>
+<p>p* minimizes annual logistics cost for each SKU within the search range.</p>
+<div class="table-wrap" id="serviceTable"></div></div>
+</section>
+
+<section id="plan" class="tab">
+<div class="panel"><h3>Replenishment Plan</h3><div class="table-wrap" id="planTable"></div></div>
+</section>
+</main></div>
+<script src="app.js"></script>
+</body></html>
