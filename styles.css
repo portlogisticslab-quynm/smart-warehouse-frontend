@@ -21,3 +21,13 @@ main{padding:14px;overflow:auto}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin
 canvas{max-height:330px}.status{font-size:12px;background:#f0f4f8;border:1px solid var(--border);padding:9px;border-radius:7px;min-height:46px}
 .scenario{display:grid;grid-template-columns:180px 1fr;gap:8px;align-items:center}.scenario input[type=range]{margin:0}
 @media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{border-right:none}.grid2,.cards{grid-template-columns:1fr}}
+.site-footer{
+  text-align:center;
+  padding:14px 10px;
+  margin-top:18px;
+  border-top:1px solid #d8e2ef;
+  background:#ffffff;
+  color:#486581;
+  font-size:13px;
+  font-weight:600;
+}
